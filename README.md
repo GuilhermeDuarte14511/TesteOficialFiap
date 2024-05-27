@@ -107,7 +107,7 @@ A aplicação possui as seguintes funcionalidades:
 
 5. **Abra o navegador e acesse**:
     ```
-    http://localhost:5000
+    http://localhost:{Porta}
     ```
 
 ### Opção 3: Criar e Popular o Banco de Dados Manualmente
@@ -186,6 +186,7 @@ dotnet test
 ## Observações
 
 Como citado acima, estamos usando jquery auto complete, então peço que quando escreverem por exemplo João(em tese deverá ser mostrado os Joãos, ou quem tiver nome de Joao no meio, caso não apareça nada e existe na base de dados, de um Cntrl + Backspace
+As opções de Editar, inativar, etc ficam na tabela, caso não estejam visualizando a tabela tem um recurso de "Redesenhar seu tamanho" para atender seu monitor, basta você segurar na coluna da tabela que quer aumentar ou diminuir tamanho e mexer nela
 
 ## Contato
 
