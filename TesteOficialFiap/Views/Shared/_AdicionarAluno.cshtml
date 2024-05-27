@@ -1,0 +1,46 @@
+﻿@* Modal para adicionar aluno *@
+<div class="modal fade" id="addAlunoModal" tabindex="-1" aria-labelledby="addAlunoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAlunoModalLabel">Adicionar Aluno</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addAlunoForm">
+                    <div class="mb-3">
+                        <label for="addNome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="addNome" name="Nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="addEmail" name="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addSenha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="addSenha" name="Senha" required>
+                        <div id="addSenhaFeedback" class="form-text text-muted mt-1">
+                            <p id="lengthRequirement" class="mb-0">Deve conter pelo menos 8 caracteres</p>
+                            <p id="uppercaseRequirement" class="mb-0">Deve conter pelo menos uma letra maiúscula</p>
+                            <p id="specialCharRequirement" class="mb-0">Deve conter pelo menos um caractere especial</p>
+                        </div>
+                        <div id="addSenhaStrength" class="form-text text-danger mt-1"></div>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="addAtivo" name="Ativo">
+                        <label class="form-check-label" for="addAtivo">Ativo</label>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <label for="addAutocompleteTurmas" class="form-label">Turma <span id="loadingText" class="text-primary" style="display: none;">Carregando...</span></label>
+                        <input type="text" class="form-control" id="addAutocompleteTurmas" name="TurmaNome" required>
+                        <div id="addSelectedTurmasList" class="mt-2"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveAddAlunoBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

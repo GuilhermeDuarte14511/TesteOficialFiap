@@ -1,0 +1,36 @@
+﻿@* Modal para editar aluno *@
+<div class="modal fade" id="editAlunoModal" tabindex="-1" aria-labelledby="editAlunoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAlunoModalLabel">Editar Aluno</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAlunoForm">
+                    <div class="mb-3">
+                        <label for="editNome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="editNome" name="Nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" name="Email" required>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="editAtivo" name="Ativo">
+                        <label class="form-check-label" for="editAtivo">Ativo</label>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <label for="editAutocompleteTurmas" class="form-label">Turma <span id="loadingText" class="text-primary" style="display: none;">Carregando...</span></label>
+                        <input type="text" class="form-control" id="editAutocompleteTurmas" name="TurmaNome" required>
+                        <div id="editSelectedTurmasList" class="mt-2"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveEditAlunoBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

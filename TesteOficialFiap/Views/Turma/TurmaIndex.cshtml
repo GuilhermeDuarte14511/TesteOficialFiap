@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Turmas";
+}
+
+<h1>Lista de Turmas</h1>
+<div class="container mt-5">
+    <div class="row mb-3">
+        <div class="col">
+            <input type="text" id="quickFilterInput" class="form-control" placeholder="Pesquisar...">
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-primary" id="addTurmaBtn" data-bs-toggle="modal" data-bs-target="#criarTurmaModal">Adicionar Turma</button>
+        </div>
+    </div>
+    <div id="turmaGrid" style="height: 600px;" class="ag-theme-alpine"></div>
+</div>
+
+@await Html.PartialAsync("_CriarTurma")
+@await Html.PartialAsync("_EditarTurma")
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmActionBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastMessage" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Mensagem</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="toastBody" class="toast-body text-white"></div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿<div class="modal fade" id="criarTurmaModal" tabindex="-1" aria-labelledby="criarTurmaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="criarTurmaModalLabel">Adicionar Turma</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="criarTurmaForm">
+                    <div class="mb-3">
+                        <label for="nomeCriarTurma" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nomeCriarTurma" name="Nome" required>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="ativoCriarTurma" name="Ativo">
+                        <label class="form-check-label" for="ativoCriarTurma">Ativo</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveCriarTurmaBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

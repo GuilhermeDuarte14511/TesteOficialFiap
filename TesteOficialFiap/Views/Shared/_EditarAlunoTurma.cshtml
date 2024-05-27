@@ -1,0 +1,43 @@
+﻿<!-- Modal de Edição -->
+<div class="modal fade" id="editAlunoTurmaModal" tabindex="-1" aria-labelledby="editAlunoTurmaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAlunoTurmaModalLabel">Editar Relação</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAlunoTurmaForm">
+                    <div class="mb-3">
+                        <label for="editAlunoAutocomplete" class="form-label">Aluno</label>
+                        <input type="text" id="editAlunoAutocomplete" class="form-control">
+                        <div id="errorMessage" class="text-danger" style="display: none;"></div> <!-- Elemento para mensagem de erro -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTurmaSelect" class="form-label">Turma</label>
+                        <select id="editTurmaSelect" class="form-select" disabled></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="alunosRelacionados" class="form-label">Alunos Relacionados</label>
+                        <ul id="alunosRelacionados" class="list-group"></ul>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveEditAlunoTurmaBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1070;">
+    <div id="toastMessage" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+        <div class="d-flex">
+            <div id="toastBody" class="toast-body">
+                Mensagem
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
