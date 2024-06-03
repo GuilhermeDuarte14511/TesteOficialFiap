@@ -15,6 +15,10 @@ namespace TesteTecnicoFiap_Oficial.Controllers
             _alunoBLL = alunoBLL;
         }
 
+        /// <summary>
+        /// Retorna todos os alunos.
+        /// </summary>
+        /// <returns>Uma lista de alunos.</returns>
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
@@ -22,6 +26,11 @@ namespace TesteTecnicoFiap_Oficial.Controllers
             return Ok(alunos);
         }
 
+        /// <summary>
+        /// Retorna um aluno específico pelo ID.
+        /// </summary>
+        /// <param name="id">O ID do aluno.</param>
+        /// <returns>Um aluno.</returns>
         [HttpGet("GetAluno/{id}")]
         public IActionResult GetAluno(int id)
         {
@@ -33,6 +42,11 @@ namespace TesteTecnicoFiap_Oficial.Controllers
             return Ok(aluno);
         }
 
+        /// <summary>
+        /// Adiciona um novo aluno.
+        /// </summary>
+        /// <param name="aluno">Os dados do novo aluno.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("AddAluno")]
         public IActionResult AddAluno([FromBody] Aluno aluno)
         {
@@ -49,6 +63,12 @@ namespace TesteTecnicoFiap_Oficial.Controllers
             return BadRequest(new { success = false, result.message });
         }
 
+        /// <summary>
+        /// Edita um aluno existente.
+        /// </summary>
+        /// <param name="id">O ID do aluno.</param>
+        /// <param name="aluno">Os novos dados do aluno.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPut("EditAluno/{id}")]
         public IActionResult EditAluno(int id, [FromBody] Aluno aluno)
         {
@@ -65,6 +85,11 @@ namespace TesteTecnicoFiap_Oficial.Controllers
             return BadRequest(new { success = false, message = "Erro ao atualizar aluno." });
         }
 
+        /// <summary>
+        /// Exclui um aluno existente.
+        /// </summary>
+        /// <param name="id">O ID do aluno.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpDelete("DeleteAluno/{id}")]
         public IActionResult DeleteAluno(int id)
         {
@@ -76,6 +101,11 @@ namespace TesteTecnicoFiap_Oficial.Controllers
             return BadRequest(new { success = false, message = "Erro ao excluir aluno." });
         }
 
+        /// <summary>
+        /// Inativa um aluno existente.
+        /// </summary>
+        /// <param name="id">O ID do aluno.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("InativarAluno/{id}")]
         public IActionResult InativarAluno(int id)
         {
@@ -87,6 +117,11 @@ namespace TesteTecnicoFiap_Oficial.Controllers
             return BadRequest(new { success = false, message = "Erro ao inativar aluno." });
         }
 
+        /// <summary>
+        /// Ativa um aluno existente.
+        /// </summary>
+        /// <param name="id">O ID do aluno.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("AtivarAluno/{id}")]
         public IActionResult AtivarAluno(int id)
         {

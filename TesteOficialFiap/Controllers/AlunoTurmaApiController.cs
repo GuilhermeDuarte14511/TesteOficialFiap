@@ -20,6 +20,10 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             _turmaBLL = turmaBLL;
         }
 
+        /// <summary>
+        /// Retorna todas as turmas.
+        /// </summary>
+        /// <returns>Uma lista de turmas.</returns>
         [HttpGet("GetAllTurmas")]
         public IActionResult GetAllTurmas()
         {
@@ -27,6 +31,10 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             return Ok(turmas);
         }
 
+        /// <summary>
+        /// Retorna todos os alunos.
+        /// </summary>
+        /// <returns>Uma lista de alunos.</returns>
         [HttpGet("GetAllAlunos")]
         public IActionResult GetAllAlunos()
         {
@@ -34,6 +42,11 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             return Ok(alunos);
         }
 
+        /// <summary>
+        /// Retorna os alunos de uma turma específica.
+        /// </summary>
+        /// <param name="turmaId">O ID da turma.</param>
+        /// <returns>Uma lista de alunos.</returns>
         [HttpGet("GetAlunosByTurma/{turmaId}")]
         public IActionResult GetAlunosByTurma(int turmaId)
         {
@@ -41,6 +54,11 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             return Ok(alunos);
         }
 
+        /// <summary>
+        /// Adiciona um aluno a uma turma.
+        /// </summary>
+        /// <param name="alunoTurma">Os dados da associação aluno-turma.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("AddAlunoTurma")]
         public IActionResult AddAlunoTurma([FromBody] AlunoTurma alunoTurma)
         {
@@ -57,6 +75,11 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             return BadRequest(new { success = false, message = "Erro ao adicionar associação." });
         }
 
+        /// <summary>
+        /// Inativa a associação de um aluno a uma turma.
+        /// </summary>
+        /// <param name="id">O ID da associação.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("InativarAlunoTurma/{id}")]
         public IActionResult InativarAlunoTurma(int id)
         {
@@ -68,6 +91,11 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             return BadRequest(new { success = false, message = "Erro ao inativar associação." });
         }
 
+        /// <summary>
+        /// Ativa a associação de um aluno a uma turma.
+        /// </summary>
+        /// <param name="id">O ID da associação.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("AtivarAlunoTurma/{id}")]
         public IActionResult AtivarAlunoTurma(int id)
         {
@@ -79,6 +107,11 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             return BadRequest(new { success = false, message = "Erro ao ativar associação." });
         }
 
+        /// <summary>
+        /// Desvincula um aluno de uma turma.
+        /// </summary>
+        /// <param name="alunoTurma">Os dados da associação aluno-turma.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("DesvincularAlunoTurma")]
         public IActionResult DesvincularAlunoTurma([FromBody] AlunoTurma alunoTurma)
         {
@@ -95,6 +128,11 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
             return BadRequest(new { success = false, message = "Erro ao desvincular associação." });
         }
 
+        /// <summary>
+        /// Vincula um aluno a uma turma.
+        /// </summary>
+        /// <param name="alunoTurma">Os dados da associação aluno-turma.</param>
+        /// <returns>Resultado da operação.</returns>
         [HttpPost("VincularAlunoTurma")]
         public IActionResult VincularAlunoTurma([FromBody] AlunoTurma alunoTurma)
         {
