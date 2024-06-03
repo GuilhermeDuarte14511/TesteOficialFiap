@@ -61,7 +61,7 @@ app.UseSwaggerUI(c =>
 
 app.UseReDoc(c =>
 {
-    c.RoutePrefix = "docs"; // Serve o ReDoc em /redoc
+    c.RoutePrefix = "docs";
     c.SpecUrl = "/swagger/v1/swagger.json";
     c.DocumentTitle = "TesteTecnicoFIAP API Documentation";
 });
