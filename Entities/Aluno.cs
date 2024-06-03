@@ -17,12 +17,15 @@ namespace Entities
 
         [Required(ErrorMessage = "Senha é obrigatória.")]
         [StringLength(100, MinimumLength = 8, ErrorMessage = "Senha deve ter pelo menos 8 caracteres.")]
-        public string Senha { get; set; }  
-        
+        public string Senha { get; set; } // Propriedade temporária
+
+        public byte[] SenhaHash { get; set; }
+
         public string TurmaNome { get; set; }
 
         public bool Ativo { get; set; }
 
         public ICollection<AlunoTurma> AlunoTurmas { get; set; }
+
     }
 }

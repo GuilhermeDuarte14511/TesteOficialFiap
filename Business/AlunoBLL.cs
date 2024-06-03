@@ -96,10 +96,10 @@ namespace Business
             using (var connection = new SqlConnection(_connectionString))
             {
                 var query = @"
-                    SELECT a.Id, a.Nome, a.Email, a.Ativo, t.Nome AS TurmaNome
-                    FROM Alunos a
-                    LEFT JOIN AlunoTurmas at ON a.Id = at.AlunoId
-                    LEFT JOIN Turmas t ON at.TurmaId = t.Id";
+                            SELECT a.Id, a.Nome, a.Email, a.SenhaHash, a.Ativo, t.Nome AS TurmaNome
+                            FROM Alunos a
+                            LEFT JOIN AlunoTurmas at ON a.Id = at.AlunoId
+                            LEFT JOIN Turmas t ON at.TurmaId = t.Id";
 
                 var alunoDictionary = new Dictionary<int, Aluno>();
 
@@ -122,6 +122,10 @@ namespace Business
                 return alunos;
             }
         }
+
+
+
+
 
         public Aluno GetAlunoById(int id)
         {
