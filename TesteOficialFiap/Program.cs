@@ -21,7 +21,6 @@ builder.Services.AddScoped<IAlunoTurmaBLL>(provider => new AlunoTurmaBLL(builder
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TesteTecnicoFIAP API", Version = "v1" });
-    // Adicione documentação de exemplo se necessário
     var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
@@ -47,7 +46,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Configurar Swagger para estar acessível em /swagger
 app.UseSwagger(c =>
 {
     c.RouteTemplate = "swagger/{documentName}/swagger.json";
