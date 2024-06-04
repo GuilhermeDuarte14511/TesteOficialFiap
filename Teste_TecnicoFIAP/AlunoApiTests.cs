@@ -29,7 +29,6 @@ namespace TesteTecnicoFIAP.Tests
 
             var result = _controller.GetAll();
 
-             
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnValue = Assert.IsType<List<Aluno>>(okResult.Value);
             Assert.Equal(2, returnValue.Count);
@@ -63,9 +62,7 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void AddAluno_ReturnsBadRequest()
         {
-            var aluno = new Aluno { Nome = "", Email = "", Senha = "" };
-
-            var result = _controller.AddAluno(aluno);
+            var result = _controller.AddAluno("", "", "");
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.False((bool)badRequestResult.Value.GetType().GetProperty("success").GetValue(badRequestResult.Value, null));
@@ -74,10 +71,9 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void AddAluno_ReturnsOk()
         {
-            var aluno = new Aluno { Nome = "João Silva", Email = "joao.silva@example.com", Senha = "SenhaSegura" };
-            _mockAlunoBLL.Setup(bll => bll.AddAluno(aluno)).Returns((true, "Aluno adicionado com sucesso."));
+            _mockAlunoBLL.Setup(bll => bll.AddAluno(It.IsAny<Aluno>())).Returns((true, "Aluno adicionado com sucesso."));
 
-            var result = _controller.AddAluno(aluno);
+            var result = _controller.AddAluno("João Silva", "joao.silva@example.com", "SenhaSegura");
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.True((bool)okResult.Value.GetType().GetProperty("success").GetValue(okResult.Value, null));
@@ -86,9 +82,7 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void EditAluno_ReturnsBadRequest()
         {
-            var aluno = new Aluno { Nome = "", Email = "" };
-
-            var result = _controller.EditAluno(1, aluno);
+            var result = _controller.EditAluno(1, "", "");
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.False((bool)badRequestResult.Value.GetType().GetProperty("success").GetValue(badRequestResult.Value, null));
@@ -98,9 +92,9 @@ namespace TesteTecnicoFIAP.Tests
         public void EditAluno_ReturnsOk()
         {
             var aluno = new Aluno { Nome = "João Silva", Email = "joao.silva@example.com" };
-            _mockAlunoBLL.Setup(bll => bll.EditAluno(1, aluno)).Returns(true);
+            _mockAlunoBLL.Setup(bll => bll.EditAluno(1, It.IsAny<Aluno>())).Returns(true);
 
-            var result = _controller.EditAluno(1, aluno);
+            var result = _controller.EditAluno(1, "João Silva", "joao.silva@example.com");
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.True((bool)okResult.Value.GetType().GetProperty("success").GetValue(okResult.Value, null));

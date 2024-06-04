@@ -2,6 +2,7 @@
 using Business;
 using Entities;
 using TesteTecnicoFIAP.Interface;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace TesteTecnicoFIAP.Web.Controllers.Api
 {
@@ -25,6 +26,8 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// </summary>
         /// <returns>Uma lista de turmas.</returns>
         [HttpGet("GetAllTurmas")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAllTurmas()
         {
             var turmas = _turmaBLL.GetAllTurmas();
@@ -36,6 +39,8 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// </summary>
         /// <returns>Uma lista de alunos.</returns>
         [HttpGet("GetAllAlunos")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAllAlunos()
         {
             var alunos = _alunoBLL.GetAllAlunos();
@@ -48,24 +53,41 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <param name="turmaId">O ID da turma.</param>
         /// <returns>Uma lista de alunos.</returns>
         [HttpGet("GetAlunosByTurma/{turmaId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAlunosByTurma(int turmaId)
         {
             var alunos = _alunoTurmaBLL.GetAlunosByTurma(turmaId);
+            if (alunos == null || !alunos.Any())
+            {
+                return NotFound(new { message = "Nenhum aluno encontrado para a turma especificada." });
+            }
             return Ok(alunos);
         }
 
         /// <summary>
         /// Adiciona um aluno a uma turma.
         /// </summary>
-        /// <param name="alunoTurma">Os dados da associação aluno-turma.</param>
+        /// <param name="alunoId">O ID do aluno.</param>
+        /// <param name="turmaId">O ID da turma.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("AddAlunoTurma")]
-        public IActionResult AddAlunoTurma([FromBody] AlunoTurma alunoTurma)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult AddAlunoTurma(int alunoId, int turmaId)
         {
-            if (alunoTurma == null || alunoTurma.AlunoId <= 0 || alunoTurma.TurmaId <= 0)
+            if (alunoId <= 0 || turmaId <= 0)
             {
                 return BadRequest(new { success = false, message = "Dados inválidos. Verifique se todos os campos obrigatórios estão preenchidos." });
             }
+
+            var alunoTurma = new AlunoTurma
+            {
+                AlunoId = alunoId,
+                TurmaId = turmaId
+            };
 
             var result = _alunoTurmaBLL.AddAlunoTurma(alunoTurma);
             if (result)
@@ -81,6 +103,9 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <param name="id">O ID da associação.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("InativarAlunoTurma/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult InativarAlunoTurma(int id)
         {
             var result = _alunoTurmaBLL.InativarAlunoTurma(id);
@@ -97,6 +122,9 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <param name="id">O ID da associação.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("AtivarAlunoTurma/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult AtivarAlunoTurma(int id)
         {
             var result = _alunoTurmaBLL.AtivarAlunoTurma(id);
@@ -110,17 +138,21 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <summary>
         /// Desvincula um aluno de uma turma.
         /// </summary>
-        /// <param name="alunoTurma">Os dados da associação aluno-turma.</param>
-        /// <returns>Resultado da operação.</returns>
+        /// <param name="alunoId">O ID do aluno.</param>
+        /// <param name="turmaId">O ID da turma.</param>
+        /// <returns>Resultado da operação.</param>
         [HttpPost("DesvincularAlunoTurma")]
-        public IActionResult DesvincularAlunoTurma([FromBody] AlunoTurma alunoTurma)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult DesvincularAlunoTurma(int alunoId, int turmaId)
         {
-            if (alunoTurma == null || alunoTurma.AlunoId <= 0 || alunoTurma.TurmaId <= 0)
+            if (alunoId <= 0 || turmaId <= 0)
             {
                 return BadRequest(new { success = false, message = "Dados inválidos. Verifique se todos os campos obrigatórios estão preenchidos." });
             }
 
-            var result = _alunoTurmaBLL.DesvincularAlunoTurma(alunoTurma.AlunoId, alunoTurma.TurmaId);
+            var result = _alunoTurmaBLL.DesvincularAlunoTurma(alunoId, turmaId);
             if (result)
             {
                 return Ok(new { success = true, message = "Associação desvinculada com sucesso." });
@@ -131,15 +163,25 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <summary>
         /// Vincula um aluno a uma turma.
         /// </summary>
-        /// <param name="alunoTurma">Os dados da associação aluno-turma.</param>
+        /// <param name="alunoId">O ID do aluno.</param>
+        /// <param name="turmaId">O ID da turma.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("VincularAlunoTurma")]
-        public IActionResult VincularAlunoTurma([FromBody] AlunoTurma alunoTurma)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult VincularAlunoTurma(int alunoId, int turmaId)
         {
-            if (alunoTurma == null || alunoTurma.AlunoId <= 0 || alunoTurma.TurmaId <= 0)
+            if (alunoId <= 0 || turmaId <= 0)
             {
                 return BadRequest(new { success = false, message = "Dados inválidos. Verifique se todos os campos obrigatórios estão preenchidos." });
             }
+
+            var alunoTurma = new AlunoTurma
+            {
+                AlunoId = alunoId,
+                TurmaId = turmaId
+            };
 
             var result = _alunoTurmaBLL.AddAlunoTurma(alunoTurma);
             if (result)

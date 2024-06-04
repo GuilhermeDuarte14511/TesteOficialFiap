@@ -77,9 +77,7 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void AddAlunoTurma_ReturnsBadRequest()
         {
-            var alunoTurma = new AlunoTurma { AlunoId = 0, TurmaId = 0 };
-
-            var result = _controller.AddAlunoTurma(alunoTurma);
+            var result = _controller.AddAlunoTurma(0, 0);
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.False((bool)badRequestResult.Value.GetType().GetProperty("success").GetValue(badRequestResult.Value, null));
@@ -89,10 +87,9 @@ namespace TesteTecnicoFIAP.Tests
         public void AddAlunoTurma_ReturnsOk()
         {
             var alunoTurma = new AlunoTurma { AlunoId = 1, TurmaId = 1 };
-            _mockAlunoTurmaBLL.Setup(bll => bll.AddAlunoTurma(alunoTurma)).Returns(true);
+            _mockAlunoTurmaBLL.Setup(bll => bll.AddAlunoTurma(It.IsAny<AlunoTurma>())).Returns(true);
 
-            
-            var result = _controller.AddAlunoTurma(alunoTurma);
+            var result = _controller.AddAlunoTurma(1, 1);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.True((bool)okResult.Value.GetType().GetProperty("success").GetValue(okResult.Value, null));
@@ -123,9 +120,7 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void DesvincularAlunoTurma_ReturnsBadRequest()
         {
-            var alunoTurma = new AlunoTurma { AlunoId = 0, TurmaId = 0 };
-
-            var result = _controller.DesvincularAlunoTurma(alunoTurma);
+            var result = _controller.DesvincularAlunoTurma(0, 0);
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.False((bool)badRequestResult.Value.GetType().GetProperty("success").GetValue(badRequestResult.Value, null));
@@ -134,10 +129,9 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void DesvincularAlunoTurma_ReturnsOk()
         {
-            var alunoTurma = new AlunoTurma { AlunoId = 1, TurmaId = 1 };
-            _mockAlunoTurmaBLL.Setup(bll => bll.DesvincularAlunoTurma(alunoTurma.AlunoId, alunoTurma.TurmaId)).Returns(true);
+            _mockAlunoTurmaBLL.Setup(bll => bll.DesvincularAlunoTurma(1, 1)).Returns(true);
 
-            var result = _controller.DesvincularAlunoTurma(alunoTurma);
+            var result = _controller.DesvincularAlunoTurma(1, 1);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.True((bool)okResult.Value.GetType().GetProperty("success").GetValue(okResult.Value, null));
@@ -146,9 +140,7 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void VincularAlunoTurma_ReturnsBadRequest()
         {
-            var alunoTurma = new AlunoTurma { AlunoId = 0, TurmaId = 0 };
-
-            var result = _controller.VincularAlunoTurma(alunoTurma);
+            var result = _controller.VincularAlunoTurma(0, 0);
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.False((bool)badRequestResult.Value.GetType().GetProperty("success").GetValue(badRequestResult.Value, null));
@@ -157,10 +149,9 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void VincularAlunoTurma_ReturnsOk()
         {
-            var alunoTurma = new AlunoTurma { AlunoId = 1, TurmaId = 1 };
-            _mockAlunoTurmaBLL.Setup(bll => bll.AddAlunoTurma(alunoTurma)).Returns(true);
+            _mockAlunoTurmaBLL.Setup(bll => bll.AddAlunoTurma(It.IsAny<AlunoTurma>())).Returns(true);
 
-            var result = _controller.VincularAlunoTurma(alunoTurma);
+            var result = _controller.VincularAlunoTurma(1, 1);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.True((bool)okResult.Value.GetType().GetProperty("success").GetValue(okResult.Value, null));

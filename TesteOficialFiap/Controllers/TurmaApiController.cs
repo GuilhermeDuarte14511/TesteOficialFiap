@@ -21,6 +21,8 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// </summary>
         /// <returns>Uma lista de turmas.</returns>
         [HttpGet("GetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAll()
         {
             var turmas = _turmaBLL.GetAllTurmas();
@@ -33,6 +35,9 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <param name="id">O ID da turma.</param>
         /// <returns>Uma turma.</returns>
         [HttpGet("GetTurma/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetTurma(int id)
         {
             var turma = _turmaBLL.GetTurmaById(id);
@@ -46,15 +51,24 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <summary>
         /// Adiciona uma nova turma.
         /// </summary>
-        /// <param name="turma">Os dados da nova turma.</param>
+        /// <param name="nome">Nome da nova turma.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("AddTurma")]
-        public IActionResult AddTurma([FromBody] Turma turma)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult AddTurma([FromQuery] string nome)
         {
-            if (turma == null || string.IsNullOrWhiteSpace(turma.Nome))
+            if (string.IsNullOrWhiteSpace(nome))
             {
                 return BadRequest(new { success = false, message = "Dados inválidos. Verifique se todos os campos obrigatórios estão preenchidos." });
             }
+
+            var turma = new Turma
+            {
+                Nome = nome,
+                Ativo = true
+            };
 
             var result = _turmaBLL.AddTurma(turma);
             if (result)
@@ -68,15 +82,25 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// Edita uma turma existente.
         /// </summary>
         /// <param name="id">O ID da turma.</param>
-        /// <param name="turma">Os novos dados da turma.</param>
+        /// <param name="nome">Nome da turma.</param>
+        /// <param name="ativo">Estado da turma.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPut("EditTurma/{id}")]
-        public IActionResult EditTurma(int id, [FromBody] Turma turma)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult EditTurma(int id, [FromQuery] string nome, [FromQuery] bool ativo)
         {
-            if (turma == null || string.IsNullOrWhiteSpace(turma.Nome))
+            if (string.IsNullOrWhiteSpace(nome))
             {
                 return BadRequest(new { success = false, message = "Dados inválidos. Verifique se todos os campos obrigatórios estão preenchidos." });
             }
+
+            var turma = new Turma
+            {
+                Nome = nome,
+                Ativo = ativo
+            };
 
             var result = _turmaBLL.EditTurma(id, turma);
             if (result)
@@ -92,6 +116,9 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <param name="id">O ID da turma.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("InativarTurma/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult InativarTurma(int id)
         {
             var result = _turmaBLL.InativarTurma(id);
@@ -108,6 +135,9 @@ namespace TesteTecnicoFIAP.Web.Controllers.Api
         /// <param name="id">O ID da turma.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("AtivarTurma/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult AtivarTurma(int id)
         {
             var result = _turmaBLL.AtivarTurma(id);

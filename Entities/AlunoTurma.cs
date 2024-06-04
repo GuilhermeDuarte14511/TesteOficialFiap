@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities
 {
@@ -13,26 +10,12 @@ namespace Entities
 
         [Required]
         public int AlunoId { get; set; }
-        public Aluno Aluno { get; set; }
+        public Aluno Aluno { get; set; } // Pode ser null durante a associação inicial
 
         [Required]
         public int TurmaId { get; set; }
-        public Turma Turma { get; set; }
+        public Turma Turma { get; set; } // Pode ser null durante a associação inicial
 
-        public string TurmaNome
-        {
-            get { return Turma?.Nome; }
-            set
-            {
-                if (Turma != null)
-                {
-                    Turma.Nome = value;
-                }
-                else
-                {
-                    Turma = new Turma { Nome = value };
-                }
-            }
-        }
+        public string TurmaNome { get; set; } // Não é necessário quando criando a associação
     }
 }

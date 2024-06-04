@@ -20,6 +20,8 @@ namespace TesteTecnicoFiap_Oficial.Controllers
         /// </summary>
         /// <returns>Uma lista de alunos.</returns>
         [HttpGet("GetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAll()
         {
             var alunos = _alunoBLL.GetAllAlunos();
@@ -32,6 +34,9 @@ namespace TesteTecnicoFiap_Oficial.Controllers
         /// <param name="id">O ID do aluno.</param>
         /// <returns>Um aluno.</returns>
         [HttpGet("GetAluno/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAluno(int id)
         {
             var aluno = _alunoBLL.GetAlunoById(id);
@@ -45,15 +50,28 @@ namespace TesteTecnicoFiap_Oficial.Controllers
         /// <summary>
         /// Adiciona um novo aluno.
         /// </summary>
-        /// <param name="aluno">Os dados do novo aluno.</param>
+        /// <param name="nome">Nome do aluno.</param>
+        /// <param name="email">Email do aluno.</param>
+        /// <param name="senha">Senha do aluno.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("AddAluno")]
-        public IActionResult AddAluno([FromBody] Aluno aluno)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult AddAluno([FromQuery] string nome, [FromQuery] string email, [FromQuery] string senha)
         {
-            if (aluno == null || string.IsNullOrWhiteSpace(aluno.Nome) || string.IsNullOrWhiteSpace(aluno.Email) || string.IsNullOrWhiteSpace(aluno.Senha))
+            if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(senha))
             {
                 return BadRequest(new { success = false, message = "Dados inválidos. Verifique se todos os campos obrigatórios estão preenchidos." });
             }
+
+            var aluno = new Aluno
+            {
+                Nome = nome,
+                Email = email,
+                Senha = senha,
+                Ativo = true
+            };
 
             var result = _alunoBLL.AddAluno(aluno);
             if (result.isSuccess)
@@ -67,15 +85,26 @@ namespace TesteTecnicoFiap_Oficial.Controllers
         /// Edita um aluno existente.
         /// </summary>
         /// <param name="id">O ID do aluno.</param>
-        /// <param name="aluno">Os novos dados do aluno.</param>
+        /// <param name="nome">Nome do aluno.</param>
+        /// <param name="email">Email do aluno.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPut("EditAluno/{id}")]
-        public IActionResult EditAluno(int id, [FromBody] Aluno aluno)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult EditAluno(int id, [FromQuery] string nome, [FromQuery] string email)
         {
-            if (aluno == null || string.IsNullOrWhiteSpace(aluno.Nome) || string.IsNullOrWhiteSpace(aluno.Email))
+            if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(email))
             {
                 return BadRequest(new { success = false, message = "Dados inválidos. Verifique se todos os campos obrigatórios estão preenchidos." });
             }
+
+            var aluno = new Aluno
+            {
+                Nome = nome,
+                Email = email,
+                Id = id
+            };
 
             var result = _alunoBLL.EditAluno(id, aluno);
             if (result)
@@ -91,6 +120,9 @@ namespace TesteTecnicoFiap_Oficial.Controllers
         /// <param name="id">O ID do aluno.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpDelete("DeleteAluno/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteAluno(int id)
         {
             var result = _alunoBLL.DeleteAluno(id);
@@ -107,6 +139,9 @@ namespace TesteTecnicoFiap_Oficial.Controllers
         /// <param name="id">O ID do aluno.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("InativarAluno/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult InativarAluno(int id)
         {
             var result = _alunoBLL.InativarAluno(id);
@@ -123,6 +158,9 @@ namespace TesteTecnicoFiap_Oficial.Controllers
         /// <param name="id">O ID do aluno.</param>
         /// <returns>Resultado da operação.</returns>
         [HttpPost("AtivarAluno/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult AtivarAluno(int id)
         {
             var result = _alunoBLL.AtivarAluno(id);

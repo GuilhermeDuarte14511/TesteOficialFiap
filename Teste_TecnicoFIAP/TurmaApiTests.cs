@@ -64,9 +64,7 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void AddTurma_ReturnsBadRequest()
         {
-            var turma = new Turma { Nome = "" };
-
-            var result = _controller.AddTurma(turma);
+            var result = _controller.AddTurma("");
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.False((bool)badRequestResult.Value.GetType().GetProperty("success").GetValue(badRequestResult.Value, null));
@@ -75,10 +73,9 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void AddTurma_ReturnsOk()
         {
-            var turma = new Turma { Nome = "Turma A", Ativo = true };
-            _mockTurmaBLL.Setup(bll => bll.AddTurma(turma)).Returns(true);
+            _mockTurmaBLL.Setup(bll => bll.AddTurma(It.IsAny<Turma>())).Returns(true);
 
-            var result = _controller.AddTurma(turma);
+            var result = _controller.AddTurma("Turma A");
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.True((bool)okResult.Value.GetType().GetProperty("success").GetValue(okResult.Value, null));
@@ -87,9 +84,7 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void EditTurma_ReturnsBadRequest()
         {
-            var turma = new Turma { Nome = "" };
-
-            var result = _controller.EditTurma(1, turma);
+            var result = _controller.EditTurma(1, "", true);
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.False((bool)badRequestResult.Value.GetType().GetProperty("success").GetValue(badRequestResult.Value, null));
@@ -98,10 +93,9 @@ namespace TesteTecnicoFIAP.Tests
         [Fact]
         public void EditTurma_ReturnsOk()
         {
-            var turma = new Turma { Nome = "Turma A", Ativo = true };
-            _mockTurmaBLL.Setup(bll => bll.EditTurma(1, turma)).Returns(true);
+            _mockTurmaBLL.Setup(bll => bll.EditTurma(It.IsAny<int>(), It.IsAny<Turma>())).Returns(true);
 
-            var result = _controller.EditTurma(1, turma);
+            var result = _controller.EditTurma(1, "Turma A", true);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.True((bool)okResult.Value.GetType().GetProperty("success").GetValue(okResult.Value, null));

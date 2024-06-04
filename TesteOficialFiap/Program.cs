@@ -2,6 +2,8 @@ using Microsoft.OpenApi.Models;
 using Business;
 using Newtonsoft.Json.Serialization;
 using TesteTecnicoFIAP.Interface;
+using Swashbuckle.AspNetCore.Filters;
+using TesteTecnicoFIAP.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +27,11 @@ builder.Services.AddSwaggerGen(c =>
     var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
+    c.ExampleFilters(); // Adicionar filtros de exemplo
 });
+
+// Adicionar exemplos ao contêiner de dependências
+builder.Services.AddSwaggerExamplesFromAssemblyOf<AlunoTurmaExample>();
 
 var app = builder.Build();
 
