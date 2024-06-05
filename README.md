@@ -10,11 +10,16 @@ Este projeto é uma aplicação web desenvolvida como parte do teste técnico da
 
 O projeto está organizado da seguinte forma:
 
-- **Controllers**: Contém as classes que controlam o fluxo da aplicação.
-- **Views**: Contém os arquivos de interface do usuário.
 - **Business**: Contém a lógica de negócio da aplicação.
-- **Entities**: Contém as classes que representam os dados do domínio.
-- **wwwroot**: Contém arquivos estáticos como JavaScript, CSS, e imagens.
+- **Entities**: Contém as classes que representam os dados do domínio e o contexto do banco de dados.
+- **TesteOficialFiap**: Contém a aplicação principal.
+  - **Controllers**: Controladores da aplicação.
+  - **DTOs**: Objetos de transferência de dados.
+  - **Examples**: Exemplos para o Swagger.
+  - **Models**: Modelos da aplicação.
+  - **Views**: Arquivos de interface do usuário.
+  - **wwwroot**: Arquivos estáticos como JavaScript, CSS e imagens.
+- **Teste_TecnicoFIAP**: Contém os testes unitários.
 
 ## Tecnologias Utilizadas
 
@@ -25,8 +30,9 @@ O projeto está organizado da seguinte forma:
 - **Bootstrap**: Para o design responsivo da interface.
 - **jQuery**: Para manipulação de elementos HTML e AJAX.
 - **AG Grid**: Para a exibição de dados em formato de tabela.
-- **Jquery AutoComplete**: Trazer dados em forma de lista, e auto complete, ou seja, em alguns campos, você escrevendo a 1 letra do aluno, da turma, deverá ser mostrado na lista
-
+- **jQuery AutoComplete**: Para autocompletar campos de entrada.
+- **Swagger**: Para documentação e teste das APIs.
+- **ReDoc**: Para documentação das APIs.
 
 ## Funcionalidades
 
@@ -96,7 +102,6 @@ A aplicação possui as seguintes funcionalidades:
 
 3. **Execute as migrações do Entity Framework para criar o banco de dados**:
     ```bash
-    //bash
     dotnet ef database update
     ```
 
@@ -172,21 +177,25 @@ A aplicação possui as seguintes funcionalidades:
     }
     ```
 
-
-
 ### Testes Unitários
 
-O projeto inclui uma suíte de testes unitários para garantir a funcionalidade e a integridade do código. Os testes estão localizados no projeto `TesteTecnicoFIAP.Tests`.
+O projeto inclui uma suíte de testes unitários para garantir a funcionalidade e a integridade do código. Os testes estão localizados no projeto `Teste_TecnicoFIAP`.
 
 Para executar os testes unitários, use o seguinte comando:
 ```bash
 dotnet test
 ```
 
+## Documentação das APIs
+
+A aplicação inclui Swagger e ReDoc para documentação e teste das APIs.
+
+- **Swagger**: Para acessar o Swagger, adicione `/swagger` à URL base da aplicação.
+- **ReDoc**: Para acessar o ReDoc, adicione `/docs` à URL base da aplicação.
+
 ## Observações
 
-Como citado acima, estamos usando jquery auto complete, então peço que quando escreverem por exemplo João(em tese deverá ser mostrado os Joãos, ou quem tiver nome de Joao no meio, caso não apareça nada e existe na base de dados, de um Cntrl + Backspace
-As opções de Editar, inativar, etc ficam na tabela, caso não estejam visualizando a tabela tem um recurso de "Redesenhar seu tamanho" para atender seu monitor, basta você segurar na coluna da tabela que quer aumentar ou diminuir tamanho e mexer nela
+Como citado acima, estamos usando jQuery AutoComplete. Quando escrever, por exemplo, João, em tese deverão ser mostrados os Joãos, ou quem tiver nome de João no meio. Caso não apareça nada e exista na base de dados, dê um Ctrl + Backspace. As opções de Editar, Inativar, etc. ficam na tabela. Caso não estejam visualizando a tabela, há um recurso de "Redesenhar seu tamanho" para atender seu monitor. Basta segurar na coluna da tabela que deseja aumentar ou diminuir e ajustar o tamanho.
 
 ## Contato
 
