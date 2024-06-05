@@ -831,8 +831,8 @@
                 });
         };
 
-        const loadTurmas = () => {
-            fetch('/AlunoTurma/GetAllTurmas')
+        const loadTurmas = (selectedTurmaId = null) => {
+            return fetch('/AlunoTurma/GetAllTurmas')
                 .then(response => response.json())
                 .then(turmas => {
                     console.log('Turmas carregadas:', turmas);
@@ -857,6 +857,11 @@
                             option.textContent = turma.nome;
                             editTurmaSelect.appendChild(option);
                         });
+
+                        if (selectedTurmaId) {
+                            editTurmaSelect.value = selectedTurmaId;
+                            console.log(`Turma selecionada no carregamento: ${selectedTurmaId}`);
+                        }
                     }
 
                     alunoTurmaGridApi.setRowData(turmas); // Atualiza a tabela de turmas
@@ -873,7 +878,7 @@
 
         const clearEditAlunoTurmaModalFields = () => {
             document.getElementById('editAlunoAutocomplete').value = '';
-            document.getElementById('editTurmaSelect').value = '';
+            // Não resetar o valor do editTurmaSelect aqui para manter a seleção
             document.getElementById('alunosRelacionados').innerHTML = '';
             selectedAlunos = [];
         };
@@ -885,9 +890,9 @@
                 const li = document.createElement('li');
                 li.classList.add('list-group-item');
                 li.innerHTML = `
-            ${aluno.nome}
-            <button type="button" class="btn btn-sm btn-danger float-end" onclick="desvincularAluno(${aluno.id}, ${turmaIdEdit})">Desvincular</button>
-        `;
+        ${aluno.nome}
+        <button type="button" class="btn btn-sm btn-danger float-end" onclick="desvincularAluno(${aluno.id}, ${turmaIdEdit})">Desvincular</button>
+    `;
                 alunosRelacionados.appendChild(li);
             });
         };
@@ -945,7 +950,7 @@
                 })
                 .catch(error => {
                     console.error('Erro ao inativar turma:', error);
-                    showToast('Erro ao inativar turma.', true);
+                    showToast('Erro ao inativar turma:', true);
                 });
         };
 
@@ -1004,10 +1009,10 @@
             {
                 headerName: "Ações", field: "acoes", minWidth: 150, cellRenderer: function (params) {
                     return `
-                <button class="btn btn-sm btn-warning edit-btn" data-id="${params.data.id}">Editar</button>
-                <button class="btn btn-sm btn-danger inactivate-btn" data-id="${params.data.id}" ${params.data.ativo ? '' : 'style="display:none;"'}>Inativar</button>
-                <button class="btn btn-sm btn-success activate-btn" data-id="${params.data.id}" ${params.data.ativo ? 'style="display:none;"' : ''}>Ativar</button>
-            `;
+            <button class="btn btn-sm btn-warning edit-btn" data-id="${params.data.id}">Editar</button>
+            <button class="btn btn-sm btn-danger inactivate-btn" data-id="${params.data.id}" ${params.data.ativo ? '' : 'style="display:none;"'}>Inativar</button>
+            <button class="btn btn-sm btn-success activate-btn" data-id="${params.data.id}" ${params.data.ativo ? 'style="display:none;"' : ''}>Ativar</button>
+        `;
                 }
             }
         ];
@@ -1056,6 +1061,12 @@
 
                         $('#editAlunoTurmaModal').modal('show');
                         turmaIdEdit = id;
+
+                        // Atualizar o valor selecionado do campo editTurmaSelect
+                        loadTurmas(id).then(() => {
+                            document.getElementById('editTurmaSelect').value = id;
+                            console.log(`Valor selecionado atualizado para: ${id}`);
+                        });
                     })
                     .catch(error => {
                         console.error('Erro ao buscar detalhes da associação:', error);
@@ -1151,7 +1162,8 @@
 
         $('#editAlunoTurmaModal').on('shown.bs.modal', () => {
             loadAlunos();
-            loadTurmas();
+            // Passe o ID da turma selecionada ao carregar as turmas para garantir que o valor não seja alterado
+            loadTurmas(turmaIdEdit);
         });
 
         // Chamar a função de auto completar ao focar no input de alunos
